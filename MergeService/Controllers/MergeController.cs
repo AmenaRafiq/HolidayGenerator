@@ -17,6 +17,19 @@ namespace MergeService.Controllers
         {
             Configuration = configuration;
         }
+
+        private static readonly string[] HotCountries = new[]
+        {
+            "Spain", "Dubai", "India", "Turkey", "Egypt", "Thailand", "Singapore", "Australia", "Morocco", "Mauritius", "Cuba", "Mexico", "South Africa", "Canary Islands", "Italy"
+        };
+
+        private static readonly string[] ColdCountries = new[]
+        {
+            "Finland", "Iceland", "New Zealand", "Norway", "Alaska", "Canada", "Uruguay", "Chile", "Russia", "Greece"
+        };
+
+
+
         [HttpGet]
         public async Task<IActionResult> Get()
         {
