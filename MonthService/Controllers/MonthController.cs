@@ -17,10 +17,10 @@ namespace MonthService.Controllers
             //instantiate a random number generator
             var random = new Random();
 
+            //convert to array
             var monthsArray = Enum.GetValues(typeof(Months));
-            var len = random.Next(0, monthsArray.Length);
 
-            Months month = (Months)monthsArray.GetValue(random.Next(0, len));
+            Months month = (Months)monthsArray.GetValue(random.Next(0, monthsArray.Length));
 
             return month;
         }
