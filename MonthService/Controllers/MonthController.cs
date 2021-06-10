@@ -20,6 +20,7 @@ namespace MonthService.Controllers
             //convert to array
             var monthsArray = Enum.GetValues(typeof(Months));
 
+            //get random month
             Months month = (Months)monthsArray.GetValue(random.Next(0, monthsArray.Length));
 
             return month;

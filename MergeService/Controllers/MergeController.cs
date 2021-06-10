@@ -14,6 +14,7 @@ namespace MergeService.Controllers
         private IConfiguration Configuration;
         private int daysServiceResponse;
         private Months monthServiceResponse;
+
         public MergeController(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -50,7 +51,9 @@ namespace MergeService.Controllers
 
         private string GetResult(int day, Months month) 
         {
-
+            //return a country based on the temperature of the holiday month
+            //Cooler months --> return a hot country 
+            //Warmer months --> return a cold country
             switch (month)
             {
                 case Months.JAN:
@@ -86,10 +89,12 @@ namespace MergeService.Controllers
 
         private string GetHotCountry()
         {
+            //get random country 
             return HotCountries[new Random().Next(0, HotCountries.Length)];
         }
         private string GetColdCountry()
         {
+            //get random country
             return ColdCountries[new Random().Next(0, ColdCountries.Length)];
         }
     }
