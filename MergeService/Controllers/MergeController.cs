@@ -46,7 +46,8 @@ namespace MergeService.Controllers
 
             //var mergedResponse = $"{monthServiceResponseCall}{daysServiceResponseCall}";
             var mergedResponse = GetResult(daysServiceResponse, monthServiceResponse);
-            return Ok(mergedResponse);
+            string[] response = { mergedResponse, daysServiceResponseCall, monthServiceResponse.ToString() };
+            return Ok(response);
         }
 
         private string GetResult(int day, Months month) 
