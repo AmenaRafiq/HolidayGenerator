@@ -1,4 +1,5 @@
-﻿using FrontEnd.Models;
+﻿using FrontEnd.Interfaces;
+using FrontEnd.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -14,10 +15,12 @@ namespace FrontEnd.Controllers
     public class HomeController : Controller
     {
         private IConfiguration Configuration;
+        private IRepositoryWrapper repo;
 
-        public HomeController(IConfiguration configuration)
+        public HomeController(IConfiguration configuration, IRepositoryWrapper repositorywrapper)
         {
             Configuration = configuration;
+            repo = repositorywrapper;
         }
 
         public async Task<IActionResult> IndexAsync()
