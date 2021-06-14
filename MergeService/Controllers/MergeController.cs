@@ -9,7 +9,7 @@ namespace MergeService.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class MergeController : ControllerBase
+    public partial class MergeController : ControllerBase
     {
         private IConfiguration Configuration;
         private int daysServiceResponse;
@@ -46,7 +46,7 @@ namespace MergeService.Controllers
 
             //var mergedResponse = $"{monthServiceResponseCall}{daysServiceResponseCall}";
             var mergedResponse = GetResult(daysServiceResponse, monthServiceResponse);
-            string[] response = { mergedResponse, daysServiceResponseCall, monthServiceResponse.ToString() };
+            string response = mergedResponse + "," + monthServiceResponse.ToString() + "," + daysServiceResponseCall;
             return Ok(response);
         }
 

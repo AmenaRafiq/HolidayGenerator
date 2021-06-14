@@ -15,19 +15,22 @@ namespace FrontEnd.Controllers
     public class HomeController : Controller
     {
         private IConfiguration Configuration;
-        private IRepositoryWrapper repo;
+        //private IRepositoryWrapper repo;
 
-        public HomeController(IConfiguration configuration, IRepositoryWrapper repositorywrapper)
+        public HomeController(IConfiguration configuration) //IRepositoryWrapper repositorywrapper)
         {
             Configuration = configuration;
-            repo = repositorywrapper;
+            //repo = repositorywrapper;
         }
 
         public async Task<IActionResult> IndexAsync()
         {
             var mergedService = $"{Configuration["mergeServiceURL"]}/merge";
             var mergeResponseCall = await new HttpClient().GetStringAsync(mergedService);
-            ViewBag.responseCall = mergeResponseCall;
+
+            String[] responseArray = mergeResponseCall.ToString().Split(",");
+
+            ViewBag.responseCall = responseArray[2];
             return View();
         }
 
