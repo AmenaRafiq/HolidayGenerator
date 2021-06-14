@@ -28,10 +28,10 @@ namespace FrontEnd
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRouting(r => r.LowercaseUrls = true);
-            //var myConnectionString = Configuration.GetConnectionString("DefaultConnection");
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //options.UseMySql(myConnectionString, ServerVersion.AutoDetect(myConnectionString)));
-            //services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+            var myConnectionString = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseMySql(myConnectionString, ServerVersion.AutoDetect(myConnectionString)));
+            services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddControllersWithViews();
         }
 

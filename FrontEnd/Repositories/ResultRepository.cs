@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace FrontEnd.Repositories
 {
-    //public class ResultRepository : Repository<Result>, IResultRepository
-    //{
-    //    public ResultRepository(ApplicationDbContext dbContext) : base(dbContext)
-    //    {
+    public class ResultRepository : Repository<Result>, IResultRepository
+    {
+        public ResultRepository(ApplicationDbContext dbContext) : base(dbContext)
+        {
 
-    //    }
-    //}
+        }
+    }
 }
