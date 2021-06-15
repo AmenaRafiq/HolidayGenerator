@@ -2,9 +2,15 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Holiday Generator</h1>
-    <p>Destination: @ViewBag.destination</p>
-    <p>Month: @ViewBag.month</p>
-    <p>Period (days) to stay: @ViewBag.days</p>
-</div>
+<body>
+    <div class="text-center">
+        <h5 class="display-4">Holiday Generator</h5>
+        <br />
+        <p>Here's your randomly generated holiday:</p>
+        <p>Destination: @ViewBag.destination</p>
+        <p>Go in @ViewBag.month for @ViewBag.days days!</p>
+
+        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Refresh</a>
+
+    </div>
+</body>
