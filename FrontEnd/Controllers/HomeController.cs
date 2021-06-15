@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -35,7 +36,9 @@ namespace FrontEnd.Controllers
             string month = responseArray[1];
             string days = responseArray[2];
 
-            ViewBag.responseCall = responseArray[0] + responseArray[1] + responseArray[2];
+            ViewBag.destination = destination;
+            ViewBag.month = month;
+            ViewBag.days = days;
 
             //create an entry in the database
             StoreEntryInDatabase(destination, month, days);
