@@ -1,5 +1,6 @@
 ﻿using FrontEnd.Interfaces;
 using FrontEnd.Models;
+using FrontEnd.Models.Entity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -30,7 +31,22 @@ namespace FrontEnd.Controllers
 
             String[] responseArray = mergeResponseCall.ToString().Split(",");
 
-            ViewBag.responseCall = responseArray[2];
+            ViewBag.responseCall = responseArray[0] + responseArray[1] + responseArray[2];
+
+            string destination = responseArray[0];
+            string month = responseArray[1];
+            string days = responseArray[2];
+
+            //create an entry in the results table
+            var result = new Result
+            {
+                Period = responseArray[1] + responseArray[2],
+                Country = responseArray[0],
+            };
+            repo.Results.Create(result);
+            repo.Save();
+
+
             return View();
         }
 
