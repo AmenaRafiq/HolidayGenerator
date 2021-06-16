@@ -21,11 +21,7 @@ namespace HolidayGeneratorTest
 
         public HomeControllerTest()
         {
-            //sample model
-            addResult = new Result { ID = 1, Period = "JUN6", Country = "Spain", };
-
             //controller setup
-            var resultMock = new Mock<IResult>();
             mockRepo = new Mock<IRepositoryWrapper>();
             mockConfiguration = new Mock<IConfiguration>();
             homeController = new HomeController(mockConfiguration.Object, mockRepo.Object);
@@ -43,6 +39,8 @@ namespace HolidayGeneratorTest
             //Assert
             Assert.NotNull(controllerActionResult);
             Assert.IsType<Task<IActionResult>>(controllerActionResult);
+            mockRepo.Verify(repo => repo.Results.Create(It.IsAny<Result>()), Times.Once());
+            mockRepo.Verify(repo => repo.Save(), Times.Once());
 
         }
 
@@ -58,7 +56,7 @@ namespace HolidayGeneratorTest
             //Act
             homeController.StoreEntryInDatabase(destination, month, days);
 
-            //Assert
+            //Assert - in this case, verify as it's a non-query scenario 
             mockRepo.Verify(repo => repo.Results.Create(It.IsAny<Result>()), Times.Once());
             mockRepo.Verify(repo => repo.Save(), Times.Once());
 
