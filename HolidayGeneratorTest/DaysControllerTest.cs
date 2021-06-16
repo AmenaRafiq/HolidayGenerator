@@ -3,7 +3,7 @@ using Xunit;
 
 namespace HolidayGeneratorTest
 {
-    public class UnitTest1
+    public class DaysControllerTest
     {
         [Fact]
         public void Test1()
