@@ -46,6 +46,24 @@ namespace HolidayGeneratorTest
 
         }
 
-        
+        [Fact]
+        public void StoreEntryInDatabase_Test()
+        {
+            //Arrange
+            string month = "JUN";
+            string days = "6";
+            string destination = "Spain";
+            mockRepo.Setup(repo => repo.Results.Create(It.IsAny<Result>())).Returns(It.IsAny<Result>());
+
+            //Act
+            homeController.StoreEntryInDatabase(destination, month, days);
+
+            //Assert
+            mockRepo.Verify(repo => repo.Results.Create(It.IsAny<Result>()), Times.Once());
+            mockRepo.Verify(repo => repo.Save(), Times.Once());
+
+
+
+        }
     }
 }
