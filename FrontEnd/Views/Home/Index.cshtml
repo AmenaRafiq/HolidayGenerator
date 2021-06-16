@@ -2,7 +2,14 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Holiday Generator</h1>
-    <p>@ViewBag.responseCall</p>
-</div>
+<body>
+    <div class="text-center">
+        <h2 class="display-4">Holiday Generator</h2>
+        <br />
+        <p>The perfect destination for @ViewBag.days days in @ViewBag.month is...</p>
+        <p>@ViewBag.destination!</p>
+
+        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Refresh</a>
+
+    </div>
+</body>
