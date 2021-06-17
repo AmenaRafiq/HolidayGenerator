@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace FrontEnd.Migrations
 {
+    [ExcludeFromCodeCoverage]
     public partial class InitDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
