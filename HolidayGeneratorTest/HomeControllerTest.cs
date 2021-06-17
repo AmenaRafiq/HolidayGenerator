@@ -15,9 +15,6 @@ namespace HolidayGeneratorTest
         private Mock<IConfiguration> mockConfiguration;
         private Mock<IRepositoryWrapper> mockRepo;
         private HomeController homeController;
-        //private Result result;
-        private Mock<IResult> resultMock;
-        private Result addResult;
 
         public HomeControllerTest()
         {

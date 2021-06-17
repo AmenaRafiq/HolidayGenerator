@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DaysService\DaysService.csproj" />
     <ProjectReference Include="..\FrontEnd\FrontEnd.csproj" />
   </ItemGroup>
 

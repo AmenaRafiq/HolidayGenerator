@@ -12,10 +12,12 @@ namespace DaysService.Controllers
     public class DaysController : ControllerBase
     {
         //array holding various lengths of a holiday
-        private static readonly int[] Days = new[]
+        public static readonly int[] Days = new[]
         {
             2,3,4,5,6,7,10,14,21,28,30
         };
+
+        public DaysController() { }
 
         [HttpGet]
         public int Get()
