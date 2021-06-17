@@ -36,8 +36,6 @@ namespace HolidayGeneratorTest
             //Assert
             Assert.NotNull(controllerActionResult);
             Assert.IsType<Task<IActionResult>>(controllerActionResult);
-            mockRepo.Verify(repo => repo.Results.Create(It.IsAny<Result>()), Times.Once());
-            mockRepo.Verify(repo => repo.Save(), Times.Once());
 
         }
 
