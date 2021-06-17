@@ -13,6 +13,7 @@ namespace HolidayGeneratorTest
         {
             //Arrange
             monthContoller = new MonthController();
+
             //Act
             var month = monthContoller.Get();
 
