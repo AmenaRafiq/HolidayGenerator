@@ -20,18 +20,18 @@ namespace MergeService.Controllers
             Configuration = configuration;
         }
 
-        private static readonly string[] HotCountries = new[]
+        public static readonly string[] HotCountries = new[]
         {
             "Spain", "Dubai", "India", "Turkey", "Egypt", "Thailand", "Singapore", "Australia", "Morocco", "Mauritius", "Cuba", "Mexico", "South Africa", "Canary Islands", "Italy"
         };
 
-        private static readonly string[] ColdCountries = new[]
+        public static readonly string[] ColdCountries = new[]
         {
             "Finland", "Iceland", "New Zealand", "Norway", "Alaska", "Canada", "Uruguay", "Russia"
         };
 
 
-        [HttpGet]
+        [HttpGet] 
         public async Task<IActionResult> Get()
         {
             //var daysService = $"http://localhost:17829/days";
@@ -50,7 +50,7 @@ namespace MergeService.Controllers
             return Ok(response);
         }
 
-        private string GetResult(int day, Months month) 
+        public string GetResult(int day, Months month) 
         {
             //return a country based on the temperature of the holiday month
             //Cooler months --> return a hot country 
@@ -88,12 +88,12 @@ namespace MergeService.Controllers
             
         }
 
-        private string GetHotCountry()
+        public string GetHotCountry()
         {
             //get random country 
             return HotCountries[new Random().Next(0, HotCountries.Length)];
         }
-        private string GetColdCountry()
+        public string GetColdCountry()
         {
             //get random country
             return ColdCountries[new Random().Next(0, ColdCountries.Length)];
