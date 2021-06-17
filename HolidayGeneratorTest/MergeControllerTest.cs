@@ -1,8 +1,10 @@
 using MergeService.Controllers;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using MonthService.Controllers;
 using Moq;
 using System;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace HolidayGeneratorTest
@@ -11,6 +13,20 @@ namespace HolidayGeneratorTest
     {
         private MergeController mergeController;
         private Mock<IConfiguration> mockConfiguration = new Mock<IConfiguration>();
+
+        [Fact]
+        public void Get_Test()
+        {
+            //Arrange 
+            mergeController = new MergeController(mockConfiguration.Object);
+
+            //Act
+            var controllerActionResult = mergeController.Get();
+
+            //Assert
+            Assert.NotNull(controllerActionResult);
+            Assert.IsType<Task<IActionResult>>(controllerActionResult);
+        }
 
         [Fact]
         public void GetResult_Test()
