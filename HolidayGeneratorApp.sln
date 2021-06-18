@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MergeService", "MergeServic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrontEnd", "FrontEnd\FrontEnd.csproj", "{4DC298E8-E861-4FCF-A3DA-D0C3DA7CB2FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HolidayGeneratorTest", "HolidayGeneratorTest\HolidayGeneratorTest.csproj", "{3D46380C-BAC6-434F-88D4-3E121F4EF84C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HolidayGeneratorTest", "HolidayGeneratorTest\HolidayGeneratorTest.csproj", "{3D46380C-BAC6-434F-88D4-3E121F4EF84C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

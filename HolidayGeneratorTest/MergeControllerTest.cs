@@ -29,7 +29,7 @@ namespace HolidayGeneratorTest
         }
 
         [Fact]
-        public void GetResult_Test()
+        public void GetResultHot_Test()
         {
             //Arrange
             mergeController = new MergeController(mockConfiguration.Object);
@@ -41,7 +41,24 @@ namespace HolidayGeneratorTest
             //Assert
             Assert.NotNull(result);
             Assert.IsType<string>(result);
-            
+            Assert.Contains(result, MergeController.HotCountries);
+
+        }
+
+        [Fact]
+        public void GetResultCold_Test()
+        {
+            //Arrange
+            mergeController = new MergeController(mockConfiguration.Object);
+            Months testMonth = Months.JUN;
+
+            //Act
+            var result = mergeController.GetResult(2, testMonth);
+
+            //Assert
+            Assert.NotNull(result);
+            Assert.IsType<string>(result);
+            Assert.Contains(result, MergeController.ColdCountries);
 
         }
 

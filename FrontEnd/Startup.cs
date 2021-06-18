@@ -16,9 +16,9 @@ using System.Threading.Tasks;
 
 namespace FrontEnd
 {
+    [ExcludeFromCodeCoverage]
     public class Startup
     {
-        [ExcludeFromCodeCoverage]
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
