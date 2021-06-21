@@ -1,3 +1,4 @@
+using FrontEnd.Controllers;
 using FrontEnd.Data;
 using FrontEnd.Interfaces;
 using FrontEnd.Repositories;
@@ -30,6 +31,7 @@ namespace FrontEnd
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRouting(r => r.LowercaseUrls = true);
+            services.AddHttpClient<HomeController>();
             var myConnectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseMySql(myConnectionString, ServerVersion.AutoDetect(myConnectionString)));

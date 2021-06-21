@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using MonthService.Controllers;
 using System;
 using System.Net.Http;
@@ -11,13 +10,13 @@ namespace MergeService.Controllers
     [Route("[controller]")]
     public partial class MergeController : ControllerBase
     {
-        private IConfiguration Configuration;
-        private int daysServiceResponse;
-        private Months monthServiceResponse;
+        private HttpClient _client;
+        public int daysServiceResponse;
+        public Months monthServiceResponse;
 
-        public MergeController(IConfiguration configuration)
+        public MergeController(HttpClient client)
         {
-            Configuration = configuration;
+            _client = client ?? new HttpClient();
         }
 
         public static readonly string[] HotCountries = new[]
@@ -35,13 +34,13 @@ namespace MergeService.Controllers
         public async Task<IActionResult> Get()
         {
             //var daysService = $"http://localhost:17829/days";
-            var daysService = $"{Configuration["daysServiceURL"]}/days";
-            var daysServiceResponseCall = await new HttpClient().GetStringAsync(daysService);
+            var daysService = $"{Environment.GetEnvironmentVariable("daysServiceURL")}/days";
+            var daysServiceResponseCall = await _client.GetStringAsync(daysService);
             daysServiceResponse = int.Parse(daysServiceResponseCall);
 
             //var monthService = $"http://localhost:44717/month";
-            var monthService = $"{Configuration["monthServiceURL"]}/month";
-            var monthServiceResponseCall = await new HttpClient().GetStringAsync(monthService);
+            var monthService = $"{Environment.GetEnvironmentVariable("monthServiceURL")}/month";
+            var monthServiceResponseCall = await _client.GetStringAsync(monthService);
             monthServiceResponse = (Months)Enum.Parse(typeof(Months), monthServiceResponseCall);
 
             //var mergedResponse = $"{monthServiceResponseCall}{daysServiceResponseCall}";
@@ -50,6 +49,7 @@ namespace MergeService.Controllers
             return Ok(response);
         }
 
+        [NonAction]
         public string GetResult(int day, Months month) 
         {
             //return a country based on the temperature of the holiday month
@@ -88,11 +88,14 @@ namespace MergeService.Controllers
             
         }
 
+        [NonAction]
         public string GetHotCountry()
         {
             //get random country 
             return HotCountries[new Random().Next(0, HotCountries.Length)];
         }
+
+        [NonAction]
         public string GetColdCountry()
         {
             //get random country

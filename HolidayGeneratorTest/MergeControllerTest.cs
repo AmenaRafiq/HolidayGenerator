@@ -3,7 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using MonthService.Controllers;
 using Moq;
+using RichardSzalay.MockHttp;
 using System;
+using System.Configuration;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -15,58 +18,68 @@ namespace HolidayGeneratorTest
         private Mock<IConfiguration> mockConfiguration = new Mock<IConfiguration>();
 
         [Fact]
-        public void Get_Test()
+        public async Task Get_TestAsync()
         {
             //Arrange 
-            mergeController = new MergeController(mockConfiguration.Object);
+            Environment.SetEnvironmentVariable("daysServiceURL", "http://localhost:17829");
+            Environment.SetEnvironmentVariable("monthServiceURL", "http://localhost:44717");
+            var mockHttp = new MockHttpMessageHandler();
+
+            mockHttp.When("http://localhost:17829/days").Respond("text/plain", "6");
+            mockHttp.When("http://localhost:44717/month").Respond("text/plain", "JAN");
+            
+            var client = new HttpClient(mockHttp);
+            mergeController = new MergeController(client);
 
             //Act
-            var controllerActionResult = mergeController.Get();
+            var controllerActionResult = await mergeController.Get();
+            var result = (string)((OkObjectResult)controllerActionResult).Value;
 
             //Assert
+            Assert.NotNull(result);
+            Assert.IsType<string>(result);
             Assert.NotNull(controllerActionResult);
-            Assert.IsType<Task<IActionResult>>(controllerActionResult);
+            Assert.IsType<int>(mergeController.daysServiceResponse);
+            Assert.IsType<Months>(mergeController.monthServiceResponse);
         }
 
+        
         [Fact]
-        public void GetResultHot_Test()
+        public void GetResultAllMonths_Test()
         {
             //Arrange
-            mergeController = new MergeController(mockConfiguration.Object);
-            Months testMonth = Months.JAN;
+            var mockHttp = new MockHttpMessageHandler();
 
-            //Act
-            var result = mergeController.GetResult(2, testMonth);
+            //test every month
+            foreach(Months m in Enum.GetValues(typeof(Months)))
+            {
+                //Arrange
+                mockHttp.When("http://localhost:17829/days").Respond("text/plain", "6");
+                mockHttp.When("http://localhost:44717/month").Respond("text/plain", m.ToString());
+                var client = new HttpClient(mockHttp);
+                mergeController = new MergeController(client);
+                Months testMonth = m;
 
-            //Assert
-            Assert.NotNull(result);
-            Assert.IsType<string>(result);
-            Assert.Contains(result, MergeController.HotCountries);
+                //Act
+                var result = mergeController.GetResult(2, testMonth);
 
-        }
-
-        [Fact]
-        public void GetResultCold_Test()
-        {
-            //Arrange
-            mergeController = new MergeController(mockConfiguration.Object);
-            Months testMonth = Months.JUN;
-
-            //Act
-            var result = mergeController.GetResult(2, testMonth);
-
-            //Assert
-            Assert.NotNull(result);
-            Assert.IsType<string>(result);
-            Assert.Contains(result, MergeController.ColdCountries);
+                //Assert
+                Assert.NotNull(result);
+                Assert.IsType<string>(result);
+            }
 
         }
 
+        
         [Fact]
         public void GetHotCountry_Test()
         {
             //Arrange
-            mergeController = new MergeController(mockConfiguration.Object);
+            var mockHttp = new MockHttpMessageHandler();
+            mockHttp.When("http://localhost:17829/days").Respond("text/plain", "6");
+            mockHttp.When("http://localhost:44717/month").Respond("text/plain", "JAN");
+            var client = new HttpClient(mockHttp);
+            mergeController = new MergeController(client);
 
             //Act
             var country = mergeController.GetHotCountry();
@@ -82,7 +95,11 @@ namespace HolidayGeneratorTest
         public void GetColdCountry_Test()
         {
             //Arrange
-            mergeController = new MergeController(mockConfiguration.Object);
+            var mockHttp = new MockHttpMessageHandler();
+            mockHttp.When("http://localhost:17829/days").Respond("text/plain", "6");
+            mockHttp.When("http://localhost:44717/month").Respond("text/plain", "JUN");
+            var client = new HttpClient(mockHttp);
+            mergeController = new MergeController(client);
 
             //Act
             var country = mergeController.GetColdCountry();

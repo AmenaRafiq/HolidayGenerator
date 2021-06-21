@@ -2,9 +2,10 @@ using FrontEnd.Controllers;
 using FrontEnd.Interfaces;
 using FrontEnd.Models.Entity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Moq;
+using RichardSzalay.MockHttp;
 using System;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -12,7 +13,6 @@ namespace HolidayGeneratorTest
 {
     public class HomeControllerTest
     {
-        private Mock<IConfiguration> mockConfiguration;
         private Mock<IRepositoryWrapper> mockRepo;
         private HomeController homeController;
 
@@ -20,29 +20,43 @@ namespace HolidayGeneratorTest
         {
             //controller setup
             mockRepo = new Mock<IRepositoryWrapper>();
-            mockConfiguration = new Mock<IConfiguration>();
-            homeController = new HomeController(mockConfiguration.Object, mockRepo.Object);
+            
         }
 
         [Fact]
-        public void IndexAsync_Test()
+        public async void IndexAsync_Test()
         {
             //Arrange
+            var mockHttp = new MockHttpMessageHandler();
+            Environment.SetEnvironmentVariable("mergeServiceURL", "http://localhost:11273");
+            //mockHttp.When("http://localhost:17829/days").Respond("text/plain", "6");
+            //mockHttp.When("http://localhost:44717/month").Respond("text/plain", "JAN");
+            mockHttp.When("http://localhost:11273/merge").Respond("text/plain", "Spain, JUN, 3");
+
+            var client = new HttpClient(mockHttp);
+            homeController = new HomeController(mockRepo.Object, client);
             mockRepo.Setup(repo => repo.Results.Create(It.IsAny<Result>())).Returns(It.IsAny<Result>());
 
             //Act
-            var controllerActionResult = homeController.IndexAsync();
+            var controllerActionResult = await homeController.IndexAsync();
 
             //Assert
             Assert.NotNull(controllerActionResult);
-            Assert.IsType<Task<IActionResult>>(controllerActionResult);
-
+            
         }
 
         [Fact]
         public void StoreEntryInDatabase_Test()
         {
             //Arrange
+            var mockHttp = new MockHttpMessageHandler();
+
+            mockHttp.When("http://localhost:17829/days").Respond("text/plain", "6");
+            mockHttp.When("http://localhost:44717/month").Respond("text/plain", "JAN");
+
+            var client = new HttpClient(mockHttp);
+            homeController = new HomeController(mockRepo.Object, client);
+
             string month = "JUN";
             string days = "6";
             string destination = "Spain";

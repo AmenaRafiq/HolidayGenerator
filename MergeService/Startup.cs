@@ -1,3 +1,4 @@
+using MergeService.Controllers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,6 +30,7 @@ namespace MergeService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRouting(r => r.LowercaseUrls = true);
+            services.AddHttpClient<MergeController>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
