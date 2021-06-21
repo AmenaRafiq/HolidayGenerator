@@ -23,6 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DaysService\DaysService.csproj" />
     <ProjectReference Include="..\FrontEnd\FrontEnd.csproj" />
+    <ProjectReference Include="..\MergeFunction\MergeFunction.csproj" />
     <ProjectReference Include="..\MergeService\MergeService.csproj" />
     <ProjectReference Include="..\MonthService\MonthService.csproj" />
   </ItemGroup>
