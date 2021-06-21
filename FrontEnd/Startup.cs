@@ -1,3 +1,4 @@
+using FrontEnd.Controllers;
 using FrontEnd.Data;
 using FrontEnd.Interfaces;
 using FrontEnd.Repositories;
@@ -10,11 +11,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace FrontEnd
 {
+    [ExcludeFromCodeCoverage]
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -28,6 +31,7 @@ namespace FrontEnd
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRouting(r => r.LowercaseUrls = true);
+            services.AddHttpClient<HomeController>();
             var myConnectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseMySql(myConnectionString, ServerVersion.AutoDetect(myConnectionString)));

@@ -4,7 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace FrontEnd.Migrations
 {
     [ExcludeFromCodeCoverage]
-    public partial class InitDb2 : Migration
+    public partial class InitDb3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

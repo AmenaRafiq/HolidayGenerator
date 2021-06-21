@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace FrontEnd.Interfaces
 {
+
     public interface IRepository<T>
     {
         T Create(T entity);

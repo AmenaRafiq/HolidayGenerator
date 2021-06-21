@@ -8,8 +8,10 @@ namespace MonthService.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public partial class MonthController : ControllerBase
+    public class MonthController : ControllerBase
     {
+
+        public MonthController() { }
 
         [HttpGet]
         public Months Get()

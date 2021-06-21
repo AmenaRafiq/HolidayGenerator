@@ -2,13 +2,9 @@
 using FrontEnd.Models;
 using FrontEnd.Models.Entity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -16,19 +12,19 @@ namespace FrontEnd.Controllers
 {
     public class HomeController : Controller
     {
-        private IConfiguration Configuration;
         private IRepositoryWrapper repo;
+        private HttpClient _client;
 
-        public HomeController(IConfiguration configuration, IRepositoryWrapper repositorywrapper)
+        public HomeController(IRepositoryWrapper repositorywrapper, HttpClient client)
         {
-            Configuration = configuration;
             repo = repositorywrapper;
+            _client = client ?? new HttpClient();
         }
 
         public async Task<IActionResult> IndexAsync()
         {
-            var mergedService = $"{Configuration["mergeServiceURL"]}/merge";
-            var mergeResponseCall = await new HttpClient().GetStringAsync(mergedService);
+            var mergedService = $"{Environment.GetEnvironmentVariable("mergeServiceURL")}/merge";
+            var mergeResponseCall = await _client.GetStringAsync(mergedService);
 
             //split the response into appropriate variables
             String[] responseArray = mergeResponseCall.ToString().Split(",");
@@ -59,6 +55,7 @@ namespace FrontEnd.Controllers
 
         }
 
+        [ExcludeFromCodeCoverage]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
