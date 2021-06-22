@@ -34,12 +34,12 @@ namespace MergeService.Controllers
         public async Task<IActionResult> Get()
         {
             //var daysService = $"http://localhost:17829/days";
-            var daysService = $"{Environment.GetEnvironmentVariable("daysServiceURL")}/days";
+            var daysService = $"{Environment.GetEnvironmentVariable("APPSETTING_daysServiceURL")}/days";
             var daysServiceResponseCall = await _client.GetStringAsync(daysService);
             daysServiceResponse = int.Parse(daysServiceResponseCall);
 
             //var monthService = $"http://localhost:44717/month";
-            var monthService = $"{Environment.GetEnvironmentVariable("monthServiceURL")}/month";
+            var monthService = $"{Environment.GetEnvironmentVariable("APPSETTING_monthServiceURL")}/month";
             var monthServiceResponseCall = await _client.GetStringAsync(monthService);
             monthServiceResponse = (Months)Enum.Parse(typeof(Months), monthServiceResponseCall);
 
