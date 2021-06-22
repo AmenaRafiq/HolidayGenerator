@@ -10,4 +10,5 @@ namespace FrontEnd.Models
 
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
     }
+
 }
