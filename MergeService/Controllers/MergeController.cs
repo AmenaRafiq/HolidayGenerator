@@ -12,7 +12,7 @@ namespace MergeService.Controllers
     {
         private HttpClient _client;
         public int daysServiceResponse;
-        public Months monthServiceResponse;
+        public Month monthServiceResponse;
 
         public MergeController(HttpClient client)
         {
@@ -43,7 +43,7 @@ namespace MergeService.Controllers
             var monthService = $"{Environment.GetEnvironmentVariable("monthServiceURL")}/month";
             //var monthService = $"{ConfigurationManager.AppSettings["monthServiceURL"]}/month";
             var monthServiceResponseCall = await _client.GetStringAsync(monthService);
-            monthServiceResponse = (Months)Enum.Parse(typeof(Months), monthServiceResponseCall);
+            monthServiceResponse = (Month)Enum.Parse(typeof(Month), monthServiceResponseCall);
 
             //var mergedResponse = $"{monthServiceResponseCall}{daysServiceResponseCall}";
             var mergedResponse = GetResult(daysServiceResponse, monthServiceResponse);
@@ -52,36 +52,36 @@ namespace MergeService.Controllers
         }
 
         [NonAction]
-        public string GetResult(int day, Months month) 
+        public string GetResult(int day, Month month) 
         {
             //return a country based on the temperature of the holiday month
             //Cooler months --> return a hot country 
             //Warmer months --> return a cold country
             switch (month)
             {
-                case Months.JAN:
+                case Month.JAN:
                     return GetHotCountry();
-                case Months.FEB:
+                case Month.FEB:
                     return GetHotCountry();
-                case Months.MAR:
+                case Month.MAR:
                     return GetHotCountry();
-                case Months.APR:
+                case Month.APR:
                     return GetHotCountry();
-                case Months.MAY:
+                case Month.MAY:
                     return GetColdCountry();
-                case Months.JUN:
+                case Month.JUN:
                     return GetColdCountry();
-                case Months.JUL:
+                case Month.JUL:
                     return GetColdCountry();
-                case Months.AUG:
+                case Month.AUG:
                     return GetColdCountry();
-                case Months.SEP:
+                case Month.SEP:
                     return GetColdCountry();
-                case Months.OCT:
+                case Month.OCT:
                     return GetHotCountry();
-                case Months.NOV:
+                case Month.NOV:
                     return GetHotCountry();
-                case Months.DEC:
+                case Month.DEC:
                     return GetHotCountry();
                 default:
                     return GetHotCountry();
