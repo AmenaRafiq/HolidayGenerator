@@ -148,7 +148,7 @@ resource "azurerm_app_service" "frontend" {
   }
 
   connection_string {
-    name  = "Database"
+    name  = "DefaultConnection"
     type  = "SQLServer"
     value = "Database=${azurerm_mysql_database.main.name}; Data Source=amena-holidayapp-sqlserver.mysql.database.azure.com; User Id=amenarafiq@amena-holidayapp-sqlserver; Password=Holiday123"
   }
