@@ -58,7 +58,7 @@ namespace HolidayGeneratorTest
                 mockHttp.When("http://localhost:44717/month").Respond("text/plain", m.ToString());
                 var client = new HttpClient(mockHttp);
                 mergeController = new MergeController(client);
-                Months testMonth = m;
+                Month testMonth = (Month)m;
 
                 //Act
                 var result = mergeController.GetResult(2, testMonth);
