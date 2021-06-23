@@ -54,8 +54,6 @@ jobs:
       run: dotnet restore "${{ env.DAYS_WORKING_DIRECTORY }}"
     - name: Build
       run: dotnet build "${{ env.DAYS_WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
-    - name: Test
-      run: dotnet test "${{ env.DAYS_WORKING_DIRECTORY }}" --no-build
     - name: Publish
       run: dotnet publish "${{ env.DAYS_WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_DAYS_PACKAGE_PATH }}"
     - name: Deploy to Azure WebApp
@@ -82,8 +80,6 @@ jobs:
       run: dotnet restore "${{ env.MONTH_WORKING_DIRECTORY }}"
     - name: Build
       run: dotnet build "${{ env.MONTH_WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
-    - name: Test
-      run: dotnet test "${{ env.MONTH_WORKING_DIRECTORY }}" --no-build
     - name: Publish
       run: dotnet publish "${{ env.MONTH_WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_MONTH_PACKAGE_PATH }}"
     - name: Deploy to Azure WebApp
@@ -110,8 +106,6 @@ jobs:
       run: dotnet restore "${{ env.MERGE_WORKING_DIRECTORY }}"
     - name: Build
       run: dotnet build "${{ env.MERGE_WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
-    - name: Test
-      run: dotnet test "${{ env.MERGE_WORKING_DIRECTORY }}" --no-build
     - name: Publish
       run: dotnet publish "${{ env.MERGE_WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_MERGE_PACKAGE_PATH }}"
     - name: Deploy to Azure WebApp
@@ -138,8 +132,6 @@ jobs:
       run: dotnet restore "${{ env.FRONTEND_WORKING_DIRECTORY }}"
     - name: Build
       run: dotnet build "${{ env.FRONTEND_WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
-    - name: Test
-      run: dotnet test "${{ env.FRONTEND_WORKING_DIRECTORY }}" --no-build
     - name: Publish
       run: dotnet publish "${{ env.FRONTEND_WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_FRONTEND_PACKAGE_PATH }}"
     - name: Deploy to Azure WebApp
