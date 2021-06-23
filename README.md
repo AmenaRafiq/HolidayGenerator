@@ -41,7 +41,7 @@ The following user stories served as the starting product backlog items, from wh
 
 ### Service Architecture
 
-[Service Architecture](https://github.com/AmenaRafiq/HolidayGenerator/blob/main/docs/readme_pictures/servicearchitecture.PNG)
+[Service Architecture](https://raw.githubusercontent.com/AmenaRafiq/HolidayGenerator/main/docs/readme_pictures/servicearchitecture.PNG)
 
 | Service | Host Resource | Objective |
 |---|---|---|
@@ -55,25 +55,25 @@ Database | Azure SQL Database| Stores the results of service 4. The creation of 
 
 Below is a somewhat vain Entity Relationship Diagram showing the structure of the database, which has just one table to store the results. The front-end application creates entries in the database each time new objects are generated and passed to it, i.e. every time the page refreshes. 
 
-[Database ER diagram]()
+[Database ER diagram](https://raw.githubusercontent.com/AmenaRafiq/HolidayGenerator/main/docs/readme_pictures/DB-ER.PNG)
 
 ### CI Pipeline
 
 Below is the continuous integration pipeline diagram that depicts how the project's associated services and frameworks work together. 
 
-[architecture image](https://github.com/AmenaRafiq/HolidayGenerator/blob/main/docs/readme_pictures/architecture.PNG)
+[architecture image](https://raw.githubusercontent.com/AmenaRafiq/HolidayGenerator/main/docs/readme_pictures/architecture.PNG)
 
 It shows how the tasks in the Kanban board are used to produce the code, which is stored in a Git repository. The development of the project's assets are organised by separate git branches; once the feature is complete, the branch is merged into the main branch. Usually the feature branch is then deleted - I have kept them in the repository for marking purposes only. A GitHub Actions pipeline was used to test, build and deploy the project to Azure resources that were set up and configured by a terraform script.
 
 Here is a snippet of the terraform script, the full script can be viewed at [main.tf](https://github.com/AmenaRafiq/HolidayGenerator/blob/main/terraform/main.tf)
 
-[Terraform snippet]()
+[Terraform snippet](https://raw.githubusercontent.com/AmenaRafiq/HolidayGenerator/main/docs/readme_pictures/terraform-snippet.PNG)
 
 An Azure App Service is provisioned for the front-end app with configurations to give it access to the database and the merge app for the code's GET requests. 
 
 Here is a snippet of the pipeline, the full script can be viewed at [main.yml](https://github.com/AmenaRafiq/HolidayGenerator/blob/main/.github/workflows/main.yml)
 
-[Pipeline snippet]()
+[Pipeline snippet](https://raw.githubusercontent.com/AmenaRafiq/HolidayGenerator/main/docs/readme_pictures/pipelinesnippet.PNG)
 
 This snippet shows two jobs: test and build-and-deploy-days. Inside each job, steps are run on Linux machines, configured using workflow variables. The test job runs the test project [HolidayGeneratorTest](https://github.com/AmenaRafiq/HolidayGenerator/tree/main/code/HolidayGeneratorTest). The following job builds and deploys the [Days](https://github.com/AmenaRafiq/HolidayGenerator/tree/main/code/DaysService) app to Azure. The Month, Merge and Front-End apps are built and deployed with very similar jobs. The whole pipeline runs every time the main branch is pushed to, to allow for continuous deployment and integration.
 
@@ -89,10 +89,10 @@ The board was designed with columns that move a task along the board from left t
 * Done
 
 Here is a snippet of the board to show the columns:
-[Asana board snippet](https://github.com/AmenaRafiq/HolidayGenerator/blob/main/docs/readme_pictures/asanaboardsnippet.PNG)
+[Asana board snippet](https://raw.githubusercontent.com/AmenaRafiq/HolidayGenerator/main/docs/readme_pictures/asanaboardsnippet.PNG)
 
 Here is a snippet of some of the work items, in which it is shown that the user stories were also part of the backlog: 
-[Asana board work items snippet](https://github.com/AmenaRafiq/HolidayGenerator/blob/main/docs/readme_pictures/sampleworkitems.PNG)
+[Asana board work items snippet](https://raw.githubusercontent.com/AmenaRafiq/HolidayGenerator/main/docs/readme_pictures/sampleworkitems.PNG)
 
 
 ## Risk Assessment
@@ -107,14 +107,14 @@ insert risk assessment
 
 Below is a screenshot of the console output from running the tests which displays the number of tests passed or failed:
 
-[console output image](https://github.com/AmenaRafiq/HolidayGenerator/blob/main/docs/readme_pictures/testrun.PNG)
+[console output image](https://raw.githubusercontent.com/AmenaRafiq/HolidayGenerator/main/docs/readme_pictures/testrun.PNG)
 
 ### Coverage Report
 
 Below is a screenshot of the test coverage report that has been generated to display a breakdown of the successfully tested code in the app.
 
-[coverage report image](https://github.com/AmenaRafiq/HolidayGenerator/blob/main/docs/readme_pictures/codecoverage1.PNG)
-[coverage report image](https://github.com/AmenaRafiq/HolidayGenerator/blob/main/docs/readme_pictures/codecoverage2.PNG)
+[coverage report image](https://raw.githubusercontent.com/AmenaRafiq/HolidayGenerator/main/docs/readme_pictures/codecoverage1.PNG)
+[coverage report image](https://raw.githubusercontent.com/AmenaRafiq/HolidayGenerator/main/docs/readme_pictures/codecoverage2.PNG)
 
 
 ## Front-End Design
