@@ -40,7 +40,7 @@ namespace HolidayGeneratorTest
             Assert.IsType<string>(result);
             Assert.NotNull(controllerActionResult);
             Assert.IsType<int>(mergeController.daysServiceResponse);
-            Assert.IsType<Months>(mergeController.monthServiceResponse);
+            Assert.IsType<Month>(mergeController.monthServiceResponse);
         }
 
         
