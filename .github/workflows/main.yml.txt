@@ -1,0 +1,157 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+
+  workflow_dispatch:
+
+env:
+  CONFIGURATION: Release
+  DOTNET_CORE_VERSION: 5.0.x
+
+  TEST_DIRECTORY: ./code/HolidayGeneratorTest
+
+  AZURE_WEBAPP_FRONTEND_NAME_: amena-holidayapp
+  AZURE_WEBAPP_FRONTEND_PACKAGE_PATH: FrontEnd/publish
+  AZURE_WEBAPP_FRONTEND_PUBLISH_PROFILE: ${{ secrets.amena_holidayapp_cb0a }}
+  FRONTEND_WORKING_DIRECTORY: ./code/FrontEnd
+
+  AZURE_WEBAPP_MERGE_NAME: amena-holidayapp-merge
+  AZURE_WEBAPP_MERGE_PACKAGE_PATH: MergeService/publish
+  AZURE_WEBAPP_MERGE_PUBLISH_PROFILE: ${{ secrets.amena_holidayapp_merge_6f32 }}
+  MERGE_WORKING_DIRECTORY: ./code/MergeService
+
+  AZURE_WEBAPP_MONTH_NAME: amena-holidayapp-month
+  AZURE_WEBAPP_MONTH_PACKAGE_PATH: MonthService/publish
+  AZURE_WEBAPP_MONTH_PUBLISH_PROFILE: ${{ secrets.amena_holidayapp_month_f35a }}
+  MONTH_WORKING_DIRECTORY: ./code/MonthService
+
+  AZURE_WEBAPP_DAYS_NAME: amena-holidayapp-days
+  AZURE_WEBAPP_DAYS_PACKAGE_PATH: DaysService/publish
+  AZURE_WEBAPP_DAYS_PUBLISH_PROFILE: ${{ secrets.amena_holidayapp_days_fc3c }}
+  DAYS_WORKING_DIRECTORY: ./code/DaysService
+
+jobs:
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Test
+        run: dotnet test "${{ env.TEST_DIRECTORY }}" /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
+
+  build-and-deploy-days:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+    - name: Restore
+      run: dotnet restore "${{ env.DAYS_WORKING_DIRECTORY }}"
+    - name: Build
+      run: dotnet build "${{ env.DAYS_WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+    - name: Test
+      run: dotnet test "${{ env.DAYS_WORKING_DIRECTORY }}" --no-build
+    - name: Publish
+      run: dotnet publish "${{ env.DAYS_WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_DAYS_PACKAGE_PATH }}"
+    - name: Deploy to Azure WebApp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_DAYS_NAME }}
+        package: ${{ env.AZURE_WEBAPP_DAYS_PACKAGE_PATH }}
+        publish-profile: ${{ env.AZURE_WEBAPP_DAYS_PUBLISH_PROFILE }}
+    - name: Publish Artifacts
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: webapp
+        path: ${{ env.AZURE_WEBAPP_DAYS_PACKAGE_PATH }}
+
+  build-and-deploy-month:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+    - name: Restore
+      run: dotnet restore "${{ env.MONTH_WORKING_DIRECTORY }}"
+    - name: Build
+      run: dotnet build "${{ env.MONTH_WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+    - name: Test
+      run: dotnet test "${{ env.MONTH_WORKING_DIRECTORY }}" --no-build
+    - name: Publish
+      run: dotnet publish "${{ env.MONTH_WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_MONTH_PACKAGE_PATH }}"
+    - name: Deploy to Azure WebApp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_MONTH_NAME }}
+        package: ${{ env.AZURE_WEBAPP_MONTH_PACKAGE_PATH }}
+        publish-profile: ${{ env.AZURE_WEBAPP_MONTH_PUBLISH_PROFILE }}
+    - name: Publish Artifacts
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: webapp
+        path: ${{ env.AZURE_WEBAPP_MONTH_PACKAGE_PATH }}
+
+  build-and-deploy-merge:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+    - name: Restore
+      run: dotnet restore "${{ env.MERGE_WORKING_DIRECTORY }}"
+    - name: Build
+      run: dotnet build "${{ env.MERGE_WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+    - name: Test
+      run: dotnet test "${{ env.MERGE_WORKING_DIRECTORY }}" --no-build
+    - name: Publish
+      run: dotnet publish "${{ env.MERGE_WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_MERGE_PACKAGE_PATH }}"
+    - name: Deploy to Azure WebApp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_MERGE_NAME }}
+        package: ${{ env.AZURE_WEBAPP_MERGE_PACKAGE_PATH }}
+        publish-profile: ${{ env.AZURE_WEBAPP_MERGE_PUBLISH_PROFILE }}
+    - name: Publish Artifacts
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: webapp
+        path: ${{ env.AZURE_WEBAPP_MERGE_PACKAGE_PATH }}
+
+  build-and-deploy-frontend:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
+    - name: Restore
+      run: dotnet restore "${{ env.FRONTEND_WORKING_DIRECTORY }}"
+    - name: Build
+      run: dotnet build "${{ env.FRONTEND_WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-restore
+    - name: Test
+      run: dotnet test "${{ env.FRONTEND_WORKING_DIRECTORY }}" --no-build
+    - name: Publish
+      run: dotnet publish "${{ env.FRONTEND_WORKING_DIRECTORY }}" --configuration ${{ env.CONFIGURATION }} --no-build --output "${{ env.AZURE_WEBAPP_FRONTEND_PACKAGE_PATH }}"
+    - name: Deploy to Azure WebApp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: ${{ env.AZURE_WEBAPP_FRONTEND_NAME }}
+        package: ${{ env.AZURE_WEBAPP_FRONTEND_PACKAGE_PATH }}
+        publish-profile: ${{ env.AZURE_WEBAPP_FRONTEND_PUBLISH_PROFILE }}
+    - name: Publish Artifacts
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        name: webapp
+        path: ${{ env.AZURE_WEBAPP_FRONTEND_PACKAGE_PATH }}
