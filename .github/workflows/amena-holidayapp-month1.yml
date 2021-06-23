@@ -6,7 +6,7 @@ on:
 env:
   AZURE_WEBAPP_NAME: amena-holidayapp-month
   AZURE_WEBAPP_PACKAGE_PATH: MonthService/publish
-  AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.amena_holidayapp_month_50dd }}
+  AZURE_WEBAPP_PUBLISH_PROFILE: ${{ secrets.amena_holidayapp_month_f35a }}
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 5.0.x
   WORKING_DIRECTORY: ./code/MonthService
