@@ -43,6 +43,12 @@ The following user stories served as the starting product backlog items, from wh
 
 ## Architecture
 
+### Initial Architecture Design
+
+![initial service architecture](https://raw.githubusercontent.com/AmenaRafiq/HolidayGenerator/main/docs/readme_pictures/previous-service-architecture.PNG)
+
+In this design, the Merge service stores the results of the final object generation. This was deemed an issue in the case that, if a problem occurred in the front-end and it was not rendered for the user correctly, storing a result that the user never sees is redundant. The following design addresses this issue.
+
 ### Service Architecture
 
 ![Service Architecture](https://raw.githubusercontent.com/AmenaRafiq/HolidayGenerator/main/docs/readme_pictures/servicearchitecture.PNG)
@@ -128,7 +134,19 @@ Below is a screenshot of the test coverage report that has been generated to dis
 
 ## Front-End Design
 
--
+This time, the front-end of the application was kept very simple. Behind lies a background image, on top of which the appropriate information is shown: the title of the app, a message in which all 3 generated objects are displayed and a refresh link.
+
+![front-end image](https://raw.githubusercontent.com/AmenaRafiq/HolidayGenerator/main/docs/readme_pictures/front-end.PNG)
+
+A small improvement would be to improve the refresh link to make it more obvious at first glance that it is a link, or change it into a button to ensure the user immediately knows that it is clickable.
+
+## Future Improvements
+
+The service architecture could be tweaked again, changing the hosting resources for the services from web apps on App Services to Azure Function Apps. 
+
+![suggested architecture](https://raw.githubusercontent.com/AmenaRafiq/HolidayGenerator/main/docs/readme_pictures/improved-architecture.PNG)
+
+This would be a more economical solution as Azure Functions has a consumption-based pricing plan option, in which you only pay when the code is running. This would mean that costs for the three services Days, Months and Merge would only incur during the GET requests made to them. Right now, being hosted on App Service means that even when the app is stopped, costs still incur as part of the pricing plan.
 
 ## Author
 
