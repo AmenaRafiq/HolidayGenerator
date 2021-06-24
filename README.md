@@ -136,7 +136,7 @@ Below is a screenshot of the test coverage report that has been generated to dis
 
 This time, the front-end of the application was kept very simple. Behind lies a background image, on top of which the appropriate information is shown: the title of the app, a message in which all 3 generated objects are displayed and a refresh link.
 
-![front-end image](https://raw.githubusercontent.com/AmenaRafiq/HolidayGenerator/main/docs/readme_pictures/front-end.PNG)
+![front-end image](https://raw.githubusercontent.com/AmenaRafiq/HolidayGenerator/main/docs/readme_pictures/front-end.png)
 
 A small improvement would be to improve the refresh link to make it more obvious at first glance that it is a link, or change it into a button to ensure the user immediately knows that it is clickable.
 
